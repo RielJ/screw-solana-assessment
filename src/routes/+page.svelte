@@ -10,7 +10,7 @@
 
 	let tokenInfo: AccountInfo<Buffer | ParsedAccountData> | null = $state(null);
 	let isLoading = $state(false);
-	let error = $state(null);
+	let error: string | undefined = $state();
 
 	const connection = new Connection(clusterApiUrl('devnet'));
 
@@ -20,12 +20,12 @@
 			const publicKey = new PublicKey(tokenAddress);
 			const tokenInfoRes = await connection.getParsedAccountInfo(publicKey);
 			tokenInfo = tokenInfoRes.value;
-			error = null;
-		} catch (error) {
-			if (error instanceof Error) {
-				error = 'Error: ' + error.message;
+			error = undefined;
+		} catch (err) {
+			if (err instanceof Error) {
+				error = 'Error fetching token info: ' + err.message;
 			} else {
-				error = 'Error';
+				error = 'Error fetching token info';
 			}
 		} finally {
 			isLoading = false;
@@ -39,10 +39,10 @@
 	<button onclick={() => fetchTokenInfo({ tokenAddress })}>Get Token Info</button>
 	{#if isLoading}
 		<p>Loading...</p>
-	{:else if error !== null}
+	{:else if error}
 		<p>{error}</p>
 	{:else if tokenInfo}
-		<p>{JSON.stringify(tokenInfo, null, 2)}</p>
+		<p>{JSON.stringify(tokenInfo, null, 4)}</p>
 	{/if}
 </div>
 
