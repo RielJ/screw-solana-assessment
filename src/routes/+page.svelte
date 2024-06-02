@@ -10,18 +10,15 @@
 	let tokenAddress = $state('');
 	let isLoading = $state(false);
 	let tokenInfo: AccountInfo<Buffer | ParsedAccountData> | null = $state(null);
-	let error: string | undefined = $state();
+	let error: string | null = $state(null);
 	const connection = new Connection(clusterApiUrl('devnet'));
 
 	const fetchToken = async () => {
-		error = undefined;
+		error = null;
+		tokenInfo = null;
 		isLoading = true;
 		const { err, data } = await fetchTokenInfo({ tokenAddress, connection });
-		if (err) {
-			error = err;
-			isLoading = false;
-			return;
-		}
+		error = err;
 		tokenInfo = data;
 		isLoading = false;
 	};
@@ -33,7 +30,7 @@
 	<button onclick={() => fetchToken()}>Get Token Info</button>
 	{#if isLoading}
 		<p>Loading...</p>
-	{:else if error !== undefined}
+	{:else if error !== null}
 		<p>{error}</p>
 	{:else if tokenInfo}
 		<p>{JSON.stringify(tokenInfo, null, 2)}</p>
@@ -41,4 +38,3 @@
 </div>
 
 <style></style>
-
