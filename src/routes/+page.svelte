@@ -8,9 +8,11 @@
 	} from '@solana/web3.js';
 
 	let tokenAddress = $state('');
+
 	let isLoading = $state(false);
 	let tokenInfo: AccountInfo<Buffer | ParsedAccountData> | null = $state(null);
 	let error: string | null = $state(null);
+
 	const connection = new Connection(clusterApiUrl('devnet'));
 
 	const fetchToken = async () => {
@@ -18,8 +20,11 @@
 		tokenInfo = null;
 		isLoading = true;
 		const { err, data } = await fetchTokenInfo({ tokenAddress, connection });
-		error = err;
-		tokenInfo = data;
+		if (err) {
+			error = err;
+		} else {
+			tokenInfo = data;
+		}
 		isLoading = false;
 	};
 </script>
