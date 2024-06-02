@@ -6,8 +6,6 @@
 		tokenResponse: { tokenInfo, isLoading, error },
 		fetchTokenInfo
 	} = useFetchTokenInfo();
-
-	$effect(() => console.log('tokenInfo', { tokenInfo, isLoading, error }));
 </script>
 
 <div>

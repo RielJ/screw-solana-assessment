@@ -30,7 +30,6 @@ export function useFetchTokenInfo() {
 			tokenResponse.error = undefined;
 			const publicKey = new PublicKey(tokenAddress);
 			const tokenInfo = await connection.getParsedAccountInfo(publicKey);
-			console.log('tokenInfo', tokenInfo);
 			tokenResponse.tokenInfo = tokenInfo.value;
 		} catch (error) {
 			if (error instanceof Error) {
@@ -39,7 +38,6 @@ export function useFetchTokenInfo() {
 				tokenResponse.error = 'Failed to fetch token info';
 			}
 		} finally {
-			console.log('tokenResponse', tokenResponse);
 			tokenResponse.isLoading = false;
 		}
 	}

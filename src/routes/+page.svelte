@@ -7,9 +7,11 @@
 		type ParsedAccountData
 	} from '@solana/web3.js';
 	let tokenAddress = $state('');
+
 	let tokenInfo: AccountInfo<Buffer | ParsedAccountData> | null = $state(null);
 	let isLoading = $state(false);
 	let error = $state(null);
+
 	const connection = new Connection(clusterApiUrl('devnet'));
 
 	const fetchTokenInfo = async ({ tokenAddress }: { tokenAddress: string }) => {
@@ -17,11 +19,9 @@
 		try {
 			const publicKey = new PublicKey(tokenAddress);
 			const tokenInfoRes = await connection.getParsedAccountInfo(publicKey);
-			console.log('tokenInfo', tokenInfo);
 			tokenInfo = tokenInfoRes.value;
 			error = null;
 		} catch (error) {
-			console.error('error', error);
 			if (error instanceof Error) {
 				error = 'Error: ' + error.message;
 			} else {
@@ -47,4 +47,3 @@
 </div>
 
 <style></style>
-
