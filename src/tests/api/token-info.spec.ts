@@ -4,27 +4,19 @@ test.describe('GET /api/token-info', () => {
 	test('no tokenAddress', async ({ page }) => {
 		const response = await page.goto('/api/token-info');
 
-		const responseBody = await response?.json();
-
-		expect(responseBody).toEqual({
-			err: 'Token address is required',
-			data: null
-		});
+		const responseBody = await response?.text();
 
 		expect(response?.status()).toBe(400);
+		expect(responseBody).toBe('Token address is required');
 	});
 
 	test('invalid tokenAddress', async ({ page }) => {
 		const response = await page.goto('/api/token-info?tokenAddress=invalid');
 
-		const responseBody = await response?.json();
-
-		expect(responseBody).toEqual({
-			err: 'Non-base58 character',
-			data: null
-		});
+		const responseBody = await response?.text();
 
 		expect(response?.status()).toBe(400);
+		expect(responseBody).toBe('Non-base58 character');
 	});
 
 	test('valid tokenAddress', async ({ page }) => {
