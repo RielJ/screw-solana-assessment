@@ -11,7 +11,6 @@ export const GET: RequestHandler = async ({ url }) => {
 		const publicKey = new PublicKey(tokenAddress);
 		const tokenInfoRes = await connection.getParsedAccountInfo(publicKey);
 		return json({
-			err: null,
 			data: tokenInfoRes.value
 		});
 	} catch (err) {
