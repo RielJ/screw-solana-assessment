@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('GET /api/token-info', () => {
-	test('no tokenAddress', async ({ page }) => {
-		const response = await page.goto('/api/token-info');
+test.describe('GET /api/mainnet-raydium-poolinfo', () => {
+	test('no poolAddress', async ({ page }) => {
+		const response = await page.goto('/api/mainnet-raydium-poolinfo');
 
 		const responseBody = await response?.text();
 
 		expect(response?.status()).toBe(400);
-		expect(responseBody).toContain('Token address is required');
+		expect(responseBody).toContain('Pool address is required');
 	});
 
-	test('invalid tokenAddress', async ({ page }) => {
-		const response = await page.goto('/api/token-info?tokenAddress=invalid');
+	test('invalid poolAddress', async ({ page }) => {
+		const response = await page.goto('/api/mainnet-raydium-poolinfo?poolAddress=invalid');
 
 		const responseBody = await response?.text();
 
@@ -19,9 +19,9 @@ test.describe('GET /api/token-info', () => {
 		expect(responseBody).toContain('Non-base58 character');
 	});
 
-	test('valid tokenAddress', async ({ page }) => {
+	test('valid poolAddress', async ({ page }) => {
 		const response = await page.goto(
-			'/api/token-info?tokenAddress=4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU'
+			'/api/mainnet-raydium-poolinfo?poolAddress=8sLbNZoA1cfnvMJLPfp98ZLAnFSYCFApfJKMbiXNLwxj'
 		);
 
 		const responseBody = await response?.json();
